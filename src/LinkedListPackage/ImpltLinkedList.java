@@ -169,8 +169,132 @@ public class ImpltLinkedList {
 		
 	}
 	
+	// trier Linked List k
+	/****  trie a bulle   *****/
+	
+	public static  void  sortList_A_Bulle (ElementListe elet) {
+		ElementListe currentNode = null;
+		int temp;
+		if(isVide()) {
+			return; 
+		}else {
+			while(elet != null) {
+				currentNode = elet.getNext();
+				while(currentNode != null) {
+					if(elet.getValue()>currentNode.getValue()) {
+					   temp = elet.getValue();
+					   elet.setValue(currentNode.getValue());
+					   currentNode.setValue(temp);
+					}
+					currentNode = currentNode.getNext();
+				}
+				elet = elet.getNext();
+			}
+		}
+		
+	}
+	
+	/******    operations on sorted Liste   */
 	
 	
+	// conatins element function without recursivity  
+	public static boolean contientTriee(ElementListe elet,int value) {
+		if(isVide()) {
+			return false;
+		}else {
+			while(elet!=null && elet.getValue() < value) {
+				elet =elet.getNext();
+			}
+			return (elet!=null && elet.getValue() ==  value);
+		}
+	}
+	// conatins element function with recursivity  
+	
+	public static boolean contientTriee_Rec(ElementListe elet,int value) {
+		
+		if(elet == null) {
+			
+			return false;
+			
+		}else if(elet.getValue()>value) {
+			
+			return false;
+		}else if(elet.getValue()==value) {
+			return true;
+		}else {
+			return contientTriee_Rec(elet.getNext(),value);
+		}
+	}
+	// inster into a Linked List sorted 
+	
+	public static ElementListe ajouterTriee(ElementListe elet, int value) {
+		ElementListe temp = null ;
+		if(isVide()) {
+			elet =  new ElementListe(value);
+		}
+		else if(getFirstNode().getValue()>=value){
+			elet =  new ElementListe(value, elet);
+		}
+		else {
+			temp = getFirstNode();
+			elet = elet.getNext();
+			while(elet != null && elet.getValue() < value ) {
+				temp = elet;
+				elet= elet.getNext();
+				
+			}
+			temp.setNext(new ElementListe(value,elet)); 
+			
+		}
+		return temp;
+		
+	}
+	
+	// insert into soted list with recysivity
+	
+	public static ElementListe ajouterTriee_Rec(ElementListe elet , int value) {
+		ElementListe temp = null ;
+		if(elet == null) {
+			elet = new ElementListe(value);
+		}else if(getFirstNode().getValue()>=value){
+			elet =  new ElementListe(value, elet);
+		}else {
+			temp = ajouterTriee_Rec(elet.getNext(),value);
+			elet.setNext(temp);
+		}
+		return elet ;
+	}
+	
+	// delete element from sorted list 
+	public static void retirerPremiereOccurrence(ElementListe elet, int value) {
+		if(isVide()) {
+			return;
+		}else if(value == getFirstNode().getValue()) {
+			elet = elet.getNext();
+		}else {
+			ElementListe precedent = null;
+			while(elet != null && elet.getValue() < value) {
+				precedent = elet;
+				elet = elet.getNext();
+			}if(elet!=null && elet.getValue() == value) {
+				precedent.setNext(elet.getNext());
+			}
+		}
+	}
+	// delete element from sorted list recurrence 
+	public static ElementListe retirerPremiereOccurrence_Rec(ElementListe elet, int value) {
+		if(elet == null) {
+			return null ;
+		}
+		else if(value == elet.getValue()) {
+			return elet.getNext();
+		}else if(value < elet.getValue()) {
+			return elet;
+		}else {
+		  elet.setNext(retirerPremiereOccurrence_Rec(elet.getNext(),value));
+		  return elet;
+		}
+	}
 	
 	
 	// main function
@@ -179,15 +303,15 @@ public class ImpltLinkedList {
 		node = new ElementListe(10);
 		System.out.println(getFirstNode().toString());
 		System.out.println(isVide());
-		addFirst(2);
+		addFirst(40);
 		System.out.println(getFirstNode().toString());
 		System.out.println(contient(1));
 		System.out.println(getLongueur());
 		System.out.println("test last");
 		System.out.println(getDernierElement().toString());
 		AddEnd(20);
-		AddEnd(30);
-		AddEnd(40);
+		AddEnd(12);
+		AddEnd(7);
 		System.out.println(getDernierElement().toString());
 		System.out.println();
 		System.out.println();
@@ -207,6 +331,23 @@ public class ImpltLinkedList {
 		System.out.println();
 		retirerPremiereOccurrenceRec(node,20);
 		System.out.println(getFirstNode().toString());
+	    AddEnd(5);
+		AddEnd(3);
+		System.out.println(getFirstNode().toString());
+		sortList_A_Bulle(node);
+		System.out.println();
+		System.out.println("*************  Sorted liste   ***************");
+		System.out.println();
+		System.out.println(getFirstNode().toString());
+		System.out.println(contientTriee(node,40));
+		System.out.println(contientTriee_Rec(node,40));
+		ajouterTriee(node,11);
+		System.out.println(getFirstNode().toString());
+		ajouterTriee_Rec(node,85);
+		System.out.println(getFirstNode().toString());
+		retirerPremiereOccurrence(node,3);
+		System.out.println(getFirstNode().toString());
+		System.out.println(retirerPremiereOccurrence_Rec(node,5).toString());
 	}
 
 }
