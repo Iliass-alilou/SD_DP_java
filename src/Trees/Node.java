@@ -43,12 +43,7 @@ public class Node {
 		return current;
 	}
 	
-	// public addc fucntion calling addRecursive
-	
-//	public void add(int value) {
-//		node = addRecursive(node, value);
-//	}
-	
+
 	
 	// 2. find an element
 	/*
@@ -148,7 +143,7 @@ public class Node {
 	
 	// BFS 
 	/*
-	 * vist a level before going to the nex level
+	 * vist a level before going to the next level
 	 * 
 	 * use a Que for implemention to hold the nodes frome eache level
 	 * */
